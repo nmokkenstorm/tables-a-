@@ -15,7 +15,7 @@
   },
   "keywords": ["desktop", "notes", "tables", "electron"],
   "author": "Niels Mokkenstorm <niels@sustainabil.it>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/nmokkenstorm/tables-app/issues"
   },
