@@ -2,20 +2,18 @@
   "name": "tables-app",
   "version": "0.0.1",
   "description": "A simple Notes equivalent with table/formula support",
-  "main": "main.js",
+  "main": "src/main.ts",
   "scripts": {
-    "test": "yarn test"
+    "test": "yarn test",
+    "build": "webpack --config ./webpack.config.js",
+    "start": "yarn build && electron ./dist/main.js",
+    "watch": "NODE_ENV=dev nodemon --watch ./src/**/* --exec 'yarn start' -e js,ts,jsx,tsx,html"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nmokkenstorm/tables-app.git"
   },
-  "keywords": [
-    "desktop",
-    "notes",
-    "tables",
-    "electron"
-  ],
+  "keywords": ["desktop", "notes", "tables", "electron"],
   "author": "Niels Mokkenstorm <niels@sustainabil.it>",
   "license": "ISC",
   "bugs": {
@@ -23,6 +21,19 @@
   },
   "homepage": "https://github.com/nmokkenstorm/tables-app#readme",
   "dependencies": {
-    "electron-reload": "^1.5.0"
+    "nodemon": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.15",
+    "@types/react-dom": "^16.9.4",
+    "electron": "^7.1.3",
+    "electron-compile": "^6.4.4",
+    "html-webpack-plugin": "^3.2.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.3",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
   }
 }
