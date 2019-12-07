@@ -1,0 +1,28 @@
+{
+  "name": "tables-app",
+  "version": "0.0.1",
+  "description": "A simple Notes equivalent with table/formula support",
+  "main": "main.js",
+  "scripts": {
+    "test": "yarn test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nmokkenstorm/tables-app.git"
+  },
+  "keywords": [
+    "desktop",
+    "notes",
+    "tables",
+    "electron"
+  ],
+  "author": "Niels Mokkenstorm <niels@sustainabil.it>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nmokkenstorm/tables-app/issues"
+  },
+  "homepage": "https://github.com/nmokkenstorm/tables-app#readme",
+  "dependencies": {
+    "electron-reload": "^1.5.0"
+  }
+}
