@@ -52,5 +52,8 @@ module.exports = [
         chunkFilename: 'app.css',
       }),
     ],
+    resolve: {
+      extensions: ['.js', '.jsx', '.tsx', '.ts'],
+    },
   },
 ];
