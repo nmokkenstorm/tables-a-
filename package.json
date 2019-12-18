@@ -4,7 +4,7 @@
   "description": "A simple Notes equivalent with table/formula support",
   "main": "src/main.ts",
   "scripts": {
-    "test": "yarn test",
+    "test": "jest",
     "build": "webpack --config ./webpack.config.js",
     "start": "yarn build && electron ./dist/main.js",
     "watch": "NODE_ENV=dev nodemon --watch ./src/**/* --exec 'yarn start' -e js,ts,jsx,tsx,html,scss"
@@ -13,7 +13,12 @@
     "type": "git",
     "url": "git+https://github.com/nmokkenstorm/tables-app.git"
   },
-  "keywords": ["desktop", "notes", "tables", "electron"],
+  "keywords": [
+    "desktop",
+    "notes",
+    "tables",
+    "electron"
+  ],
   "author": "Niels Mokkenstorm <niels@sustainabil.it>",
   "license": "MIT",
   "bugs": {
@@ -21,13 +26,19 @@
   },
   "homepage": "https://github.com/nmokkenstorm/tables-app#readme",
   "devDependencies": {
+    "@types/enzyme": "^3.10.4",
+    "@types/jest": "^24.0.23",
     "@types/react": "^16.9.15",
     "@types/react-dom": "^16.9.4",
     "autoprefixer": "^9.7.3",
     "css-loader": "^3.2.1",
     "electron": "^7.1.3",
     "electron-compile": "^6.4.4",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
+    "enzyme-to-json": "^3.4.3",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^24.9.0",
     "mini-css-extract-plugin": "^0.8.0",
     "nodemon": "^2.0.1",
     "postcss-loader": "^3.0.0",
@@ -36,6 +47,7 @@
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.1",
     "tailwindcss": "^1.1.4",
+    "ts-jest": "^24.2.0",
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.3",
     "webpack": "^4.41.2",
