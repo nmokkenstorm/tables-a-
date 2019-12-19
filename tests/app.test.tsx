@@ -22,14 +22,28 @@ it('should have cells with an index', () => {
   expect(getInput(6, 1)).toHaveLength(0);
 });
 
-it('it can update cells', () => {
-  const input = getInput(1, 1);
-
-  // Test second render and effect
+it('can update cells', () => {
   act(() => {
-    input.simulate('change', {target: {value: 'Foo'}});
+    getInput(1, 1).simulate('change', {target: {value: 'Foo'}});
   });
 
   app.update();
   expect(getInput(1, 1).prop('value')).toBe('Foo');
+});
+
+it('can use simple formulae', () => {
+  act(() => {
+    getInput(1, 1).simulate('click');
+    getInput(1, 1).simulate('change', {target: {value: '=1+3'}});
+  });
+
+  app.update();
+  expect(getInput(1, 1).prop('value')).toBe('=1+3');
+
+  act(() => {
+    getInput(1, 2).simulate('click');
+  });
+
+  app.update();
+  expect(getInput(1, 1).prop('value')).toBe(4);
 });
