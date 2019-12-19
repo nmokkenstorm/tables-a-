@@ -50,6 +50,14 @@ export class Lexer {
         this.advance();
         return new Token(TokenType.MINUS);
       }
+      if (this.currentChar == '*') {
+        this.advance();
+        return new Token(TokenType.MUL);
+      }
+      if (this.currentChar == '/') {
+        this.advance();
+        return new Token(TokenType.DIV);
+      }
 
       throw new Error(`Unsupported character ${this.currentChar} encountered`);
     }

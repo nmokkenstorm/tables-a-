@@ -2,6 +2,8 @@ export enum TokenType {
   EOF = 'EOF',
   PLUS = 'PLUS',
   MINUS = 'MINUS',
+  MUL = 'MUL',
+  DIV = 'DIV',
   INTEGER = 'INTEGER',
 }
 

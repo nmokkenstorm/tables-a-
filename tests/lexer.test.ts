@@ -20,3 +20,16 @@ it('it should handle extra spaces correctly', () => {
   expect(lexer.getNextToken().value).toBe(3);
   expect(lexer.getNextToken().type).toBe('EOF');
 });
+
+it('it should be able to handle division and multiplication', () => {
+  const expression = '1 * 2 / 3';
+
+  const lexer = new Lexer(expression);
+
+  expect(lexer.getNextToken().value).toBe(1);
+  expect(lexer.getNextToken().type).toBe('MUL');
+  expect(lexer.getNextToken().value).toBe(2);
+  expect(lexer.getNextToken().type).toBe('DIV');
+  expect(lexer.getNextToken().value).toBe(3);
+  expect(lexer.getNextToken().type).toBe('EOF');
+});
