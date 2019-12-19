@@ -53,12 +53,7 @@ export const App: React.FC<AppProps> = ({cols, rows}) => {
                           [getKey({col_i, row_i})]: e.target.value,
                         });
                       }}
-                      value={
-                        selectedCell.col_i == col_i &&
-                        selectedCell.row_i == row_i
-                          ? getCells[getKey({col_i, row_i})] || ''
-                          : getCells[getKey({col_i, row_i})] || ''
-                      }
+                      value={getCells[getKey({col_i, row_i})] || ''}
                     />
                   </div>
                 );
