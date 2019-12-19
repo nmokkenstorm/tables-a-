@@ -4,7 +4,9 @@ import {Lexer} from './Lexer';
 export class Interpreter {
   currentToken: Token;
 
-  constructor(private lexer: Lexer) {}
+  constructor(private lexer: Lexer) {
+    this.currentToken = this.nextToken();
+  }
 
   eat(tokenType: string): void {
     if (this.currentToken.type != tokenType) {
@@ -18,17 +20,41 @@ export class Interpreter {
     return this.lexer.getNextToken();
   }
 
-  term(): number {
+  factor(): number {
     let token = this.currentToken;
-    this.eat(TokenType.INTEGER);
-    return token.value;
+    if (token.type == TokenType.INTEGER) {
+      this.eat(TokenType.INTEGER);
+      return token.value;
+    } else if (token.type == TokenType.LPAREN) {
+      this.eat(TokenType.LPAREN);
+      let result = this.expr();
+      this.eat(TokenType.RPAREN);
+      return result;
+    }
+  }
+
+  term(): number {
+    let result = this.factor();
+
+    while ([TokenType.MUL, TokenType.DIV].includes(this.currentToken.type)) {
+      if (this.currentToken.type == TokenType.MUL) {
+        this.eat(TokenType.MUL);
+        result *= this.factor();
+      } else if (this.currentToken.type == TokenType.DIV) {
+        this.eat(TokenType.DIV);
+        result /= this.factor();
+      } else {
+        throw new Error('unsupported expression');
+      }
+    }
+
+    return result;
   }
 
   expr(): number {
-    this.currentToken = this.nextToken();
     let result = this.term();
 
-    while (this.currentToken.type != 'EOF') {
+    while ([TokenType.PLUS, TokenType.MINUS].includes(this.currentToken.type)) {
       if (this.currentToken.type == TokenType.PLUS) {
         this.eat(TokenType.PLUS);
         result += this.term();

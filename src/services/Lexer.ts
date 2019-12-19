@@ -58,6 +58,14 @@ export class Lexer {
         this.advance();
         return new Token(TokenType.DIV);
       }
+      if (this.currentChar == '(') {
+        this.advance();
+        return new Token(TokenType.LPAREN);
+      }
+      if (this.currentChar == ')') {
+        this.advance();
+        return new Token(TokenType.RPAREN);
+      }
 
       throw new Error(`Unsupported character ${this.currentChar} encountered`);
     }

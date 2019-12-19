@@ -5,6 +5,8 @@ export enum TokenType {
   MUL = 'MUL',
   DIV = 'DIV',
   INTEGER = 'INTEGER',
+  LPAREN = '(',
+  RPAREN = ')',
 }
 
 export class Token {
