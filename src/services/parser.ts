@@ -1,8 +1,10 @@
-export const parse = (cellvalue: string): string => {
+import {Lexer} from './Lexer';
+import {Interpreter} from './Interpreter';
+
+export const parse = (cellvalue: string): string | number => {
   if (cellvalue.charAt(0) != '=') {
     return cellvalue;
   }
 
-  // @TODO: don't rely on eval
-  return eval(cellvalue.substr(1));
+  return new Interpreter(new Lexer(cellvalue.substr(1))).expr();
 };
