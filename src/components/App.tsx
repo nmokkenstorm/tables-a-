@@ -15,7 +15,7 @@ export interface CellCoordinates {
   row_i: Number;
 }
 
-const getKey = (coords: CellCoordinates): string => {
+export const getKey = (coords: CellCoordinates): string => {
   return `${coords.col_i}-${coords.row_i}`;
 };
 
@@ -38,8 +38,12 @@ export const App: React.FC<AppProps> = ({cols, rows}) => {
                     className={'h-8 w-1/6 flex-none align-middle'}
                     key={getKey({col_i, row_i})}>
                     <input
+                      name={getKey({col_i, row_i})}
                       type="text"
                       className="bg-transparent w-full h-full"
+                      onClick={() => {
+                        setSelectedCell({col_i, row_i});
+                      }}
                       onFocus={() => {
                         setSelectedCell({col_i, row_i});
                       }}
