@@ -47,3 +47,20 @@ it('can use simple formulae', () => {
   app.update();
   expect(getInput(1, 1).prop('value')).toBe(4);
 });
+
+it('does not parse formulae without =', () => {
+  act(() => {
+    getInput(1, 1).simulate('click');
+    getInput(1, 1).simulate('change', {target: {value: '1+3'}});
+  });
+
+  app.update();
+  expect(getInput(1, 1).prop('value')).toBe('1+3');
+
+  act(() => {
+    getInput(1, 2).simulate('click');
+  });
+
+  app.update();
+  expect(getInput(1, 1).prop('value')).toBe('1+3');
+});

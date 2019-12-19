@@ -3,5 +3,6 @@ export const parse = (cellvalue: string): string => {
     return cellvalue;
   }
 
+  // @TODO: don't rely on eval
   return eval(cellvalue.substr(1));
 };
