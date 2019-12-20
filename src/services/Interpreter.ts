@@ -10,7 +10,9 @@ export class Interpreter {
 
   eat(tokenType: string): void {
     if (this.currentToken.type != tokenType) {
-      throw new Error('token type mismatch');
+      throw new Error(
+        `Token type mismatch: Expected ${tokenType}, got ${this.currentToken.type}`,
+      );
     }
 
     this.currentToken = this.nextToken();
@@ -30,6 +32,8 @@ export class Interpreter {
       let result = this.expr();
       this.eat(TokenType.RPAREN);
       return result;
+    } else {
+      throw new Error('Unsupported token ' + this.currentToken);
     }
   }
 
@@ -40,11 +44,9 @@ export class Interpreter {
       if (this.currentToken.type == TokenType.MUL) {
         this.eat(TokenType.MUL);
         result *= this.factor();
-      } else if (this.currentToken.type == TokenType.DIV) {
+      } else {
         this.eat(TokenType.DIV);
         result /= this.factor();
-      } else {
-        throw new Error('unsupported expression');
       }
     }
 
@@ -58,11 +60,9 @@ export class Interpreter {
       if (this.currentToken.type == TokenType.PLUS) {
         this.eat(TokenType.PLUS);
         result += this.term();
-      } else if (this.currentToken.type == TokenType.MINUS) {
-        this.eat(TokenType.MINUS);
-        result += this.term();
       } else {
-        throw new Error('unsupported expression');
+        this.eat(TokenType.MINUS);
+        result -= this.term();
       }
     }
 

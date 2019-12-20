@@ -1,9 +1,8 @@
 import {parse} from '../src/services/Parser';
 
 it('should evaluate expressions with addition correctly', () => {
-  const expression = '= 3 + 5';
-
-  expect(parse(expression)).toBe(8);
+  expect(parse('= 3 + 5')).toBe(8);
+  expect(parse('= 3 - 5')).toBe(-2);
 });
 
 it('should evaluate expressions with division and multiplication correctly', () => {
