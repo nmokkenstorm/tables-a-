@@ -14,3 +14,8 @@ it('should evaluate expressions with parantheses correctly', () => {
   expect(parse('=(2)')).toBe(2);
   expect(parse('=(2+4)/3')).toBe(2);
 });
+
+it('should evaluate expressions with negative numbers correctly', () => {
+  expect(parse('=-2')).toBe(-2);
+  expect(parse('=10 * -3')).toBe(-30);
+});

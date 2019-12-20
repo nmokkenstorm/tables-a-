@@ -32,8 +32,14 @@ export class Interpreter {
       let result = this.expr();
       this.eat(TokenType.RPAREN);
       return result;
+    } else if (token.type == TokenType.PLUS) {
+      this.eat(TokenType.PLUS);
+      return this.factor();
+    } else if (token.type == TokenType.MINUS) {
+      this.eat(TokenType.MINUS);
+      return -1 * this.factor();
     } else {
-      throw new Error('Unsupported token ' + this.currentToken);
+      throw new Error('Unsupported token ' + this.currentToken.type);
     }
   }
 
