@@ -58,3 +58,13 @@ it('should compare expressions correctly', () => {
   expect(parse('= 1 == 1')).toBe(1);
   expect(parse('= 1 == 2')).toBe(0);
 });
+
+it('should support ternary operations', () => {
+  expect(parse('= 1 ? 2 : 3')).toBe(2);
+  expect(parse('= !1 ? 2 : 3')).toBe(3);
+  expect(parse('= (1 > 2) ? 2 : 3')).toBe(3);
+  expect(parse('= 1 > 2 ? 2 : 3')).toBe(3);
+
+  expect(parse('= 3 ?: 2')).toBe(3);
+  expect(parse('= 0 ?: 2')).toBe(2);
+});

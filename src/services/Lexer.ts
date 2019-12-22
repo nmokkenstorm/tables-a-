@@ -7,6 +7,7 @@ const doubleCharMap = {
   '==': TokenType.EQUALS,
   '>=': TokenType.GREATER_EQUALS,
   '<=': TokenType.LESSER_EQUALS,
+  '?:': TokenType.ELVIS,
 };
 
 const singleCharMap = {
@@ -19,6 +20,8 @@ const singleCharMap = {
   '>': TokenType.GREATER,
   '<': TokenType.LESSER,
   '!': TokenType.NOT,
+  '?': TokenType.QUESTIONMARK,
+  ':': TokenType.COLON,
 };
 
 export class Lexer {

@@ -14,6 +14,9 @@ export enum TokenType {
   GREATER = 'GREATER',
   LESSER = 'LESSER',
   NOT = 'NOT',
+  QUESTIONMARK = 'QUESTIONMARK',
+  COLON = 'COLON',
+  ELVIS = 'ELVIS',
 }
 
 export class Token {

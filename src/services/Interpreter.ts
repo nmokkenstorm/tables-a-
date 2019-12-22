@@ -29,7 +29,7 @@ export class Interpreter {
       return token.value;
     } else if (token.type == TokenType.LPAREN) {
       this.eat(TokenType.LPAREN);
-      let result = this.expr();
+      let result = this.run();
       this.eat(TokenType.RPAREN);
       return result;
     } else if (token.type == TokenType.PLUS) {
@@ -125,7 +125,35 @@ export class Interpreter {
     return result;
   }
 
+  ternary(): number {
+    let result = this.equality();
+
+    while (TokenType.QUESTIONMARK == this.currentToken.type) {
+      this.eat(TokenType.QUESTIONMARK);
+      let left = this.equality();
+
+      this.eat(TokenType.COLON);
+      let right = this.equality();
+
+      result = result ? left : right;
+    }
+
+    return result;
+  }
+
+  elvis(): number {
+    let result = this.ternary();
+
+    while (TokenType.ELVIS == this.currentToken.type) {
+      this.eat(TokenType.ELVIS);
+
+      result = result != 0 ? result : this.ternary();
+    }
+
+    return result;
+  }
+
   run(): number {
-    return this.equality();
+    return this.elvis();
   }
 }
