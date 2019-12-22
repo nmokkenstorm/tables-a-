@@ -37,4 +37,24 @@ it('should compare expressions correctly', () => {
   expect(parse('= 1 < 0')).toBe(0);
   expect(parse('= 1 < 1')).toBe(0);
   expect(parse('= 1 < 2')).toBe(1);
+
+  expect(parse('= 1 >= -1')).toBe(1);
+  expect(parse('= 1 >= 0')).toBe(1);
+  expect(parse('= 1 >= 1')).toBe(1);
+  expect(parse('= 1 >= 2')).toBe(0);
+
+  expect(parse('= 1 <= -1')).toBe(0);
+  expect(parse('= 1 <= 0')).toBe(0);
+  expect(parse('= 1 <= 1')).toBe(1);
+  expect(parse('= 1 <= 2')).toBe(1);
+
+  expect(parse('= 1 != -1')).toBe(1);
+  expect(parse('= 1 != 0')).toBe(1);
+  expect(parse('= 1 != 1')).toBe(0);
+  expect(parse('= 1 != 2')).toBe(1);
+
+  expect(parse('= 1 == -1')).toBe(0);
+  expect(parse('= 1 == 0')).toBe(0);
+  expect(parse('= 1 == 1')).toBe(1);
+  expect(parse('= 1 == 2')).toBe(0);
 });

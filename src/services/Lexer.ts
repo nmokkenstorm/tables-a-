@@ -2,6 +2,13 @@ import {Token, TokenType} from './Token';
 
 const isIntChar = (c): boolean => c >= '0' && c <= '9';
 
+const doubleCharMap = {
+  '!=': TokenType.NOT_EQUALS,
+  '==': TokenType.EQUALS,
+  '>=': TokenType.GREATER_EQUALS,
+  '<=': TokenType.LESSER_EQUALS,
+};
+
 const singleCharMap = {
   '+': TokenType.PLUS,
   '-': TokenType.MINUS,
@@ -15,17 +22,19 @@ const singleCharMap = {
 };
 
 export class Lexer {
-  position: number = 0;
+  position: number = -1;
   currentToken: Token;
   currentChar: string;
+  nextChar: string;
 
   constructor(private expression: string) {
-    this.currentChar = expression.charAt(this.position);
+    this.advance();
   }
 
   advance(): void {
     this.position++;
     this.currentChar = this.expression.charAt(this.position);
+    this.nextChar = this.expression.charAt(this.position + 1);
   }
 
   readInteger(): number {
@@ -53,6 +62,15 @@ export class Lexer {
       if (this.currentChar == ' ') {
         this.skipWhiteSpace();
         continue;
+      }
+
+      if (doubleCharMap[this.currentChar + this.nextChar]) {
+        const token = new Token(
+          doubleCharMap[this.currentChar + this.nextChar],
+        );
+        this.advance();
+        this.advance();
+        return token;
       }
 
       if (singleCharMap[this.currentChar]) {
