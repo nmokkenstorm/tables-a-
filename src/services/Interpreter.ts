@@ -77,4 +77,45 @@ export class Interpreter {
 
     return result;
   }
+
+  operator(): number {
+    let result = this.expr();
+
+    while (
+      [
+        TokenType.EQUALS,
+        TokenType.NOT_EQUALS,
+        TokenType.GREATER_EQUALS,
+        TokenType.LESSER_EQUALS,
+        TokenType.GREATER,
+        TokenType.LESSER,
+      ].includes(this.currentToken.type)
+    ) {
+      if (this.currentToken.type == TokenType.EQUALS) {
+        this.eat(TokenType.EQUALS);
+        result = result == this.expr() ? 1 : 0;
+      } else if (this.currentToken.type == TokenType.NOT_EQUALS) {
+        this.eat(TokenType.NOT_EQUALS);
+        result = result != this.expr() ? 1 : 0;
+      } else if (this.currentToken.type == TokenType.GREATER_EQUALS) {
+        this.eat(TokenType.GREATER_EQUALS);
+        result = result >= this.expr() ? 1 : 0;
+      } else if (this.currentToken.type == TokenType.LESSER_EQUALS) {
+        this.eat(TokenType.LESSER_EQUALS);
+        result = result <= this.expr() ? 1 : 0;
+      } else if (this.currentToken.type == TokenType.GREATER) {
+        this.eat(TokenType.GREATER);
+        result = result > this.expr() ? 1 : 0;
+      } else if (this.currentToken.type == TokenType.LESSER) {
+        this.eat(TokenType.LESSER);
+        result = result < this.expr() ? 1 : 0;
+      }
+    }
+
+    return result;
+  }
+
+  run(): number {
+    return this.operator();
+  }
 }

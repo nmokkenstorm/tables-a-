@@ -6,5 +6,5 @@ export const parse = (cellvalue: string): string | number => {
     return cellvalue;
   }
 
-  return new Interpreter(new Lexer(cellvalue.substr(1))).expr();
+  return new Interpreter(new Lexer(cellvalue.substr(1))).run();
 };
