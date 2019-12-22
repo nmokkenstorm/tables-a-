@@ -83,21 +83,13 @@ export class Interpreter {
 
     while (
       [
-        TokenType.EQUALS,
-        TokenType.NOT_EQUALS,
         TokenType.GREATER_EQUALS,
         TokenType.LESSER_EQUALS,
         TokenType.GREATER,
         TokenType.LESSER,
       ].includes(this.currentToken.type)
     ) {
-      if (this.currentToken.type == TokenType.EQUALS) {
-        this.eat(TokenType.EQUALS);
-        result = result == this.expr() ? 1 : 0;
-      } else if (this.currentToken.type == TokenType.NOT_EQUALS) {
-        this.eat(TokenType.NOT_EQUALS);
-        result = result != this.expr() ? 1 : 0;
-      } else if (this.currentToken.type == TokenType.GREATER_EQUALS) {
+      if (this.currentToken.type == TokenType.GREATER_EQUALS) {
         this.eat(TokenType.GREATER_EQUALS);
         result = result >= this.expr() ? 1 : 0;
       } else if (this.currentToken.type == TokenType.LESSER_EQUALS) {
@@ -115,7 +107,25 @@ export class Interpreter {
     return result;
   }
 
+  equality(): number {
+    let result = this.operator();
+
+    while (
+      [TokenType.EQUALS, TokenType.NOT_EQUALS].includes(this.currentToken.type)
+    ) {
+      if (this.currentToken.type == TokenType.EQUALS) {
+        this.eat(TokenType.EQUALS);
+        result = result == this.operator() ? 1 : 0;
+      } else if (this.currentToken.type == TokenType.NOT_EQUALS) {
+        this.eat(TokenType.NOT_EQUALS);
+        result = result != this.operator() ? 1 : 0;
+      }
+    }
+
+    return result;
+  }
+
   run(): number {
-    return this.operator();
+    return this.equality();
   }
 }
