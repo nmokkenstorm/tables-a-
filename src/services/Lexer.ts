@@ -2,6 +2,15 @@ import {Token, TokenType} from './Token';
 
 const isIntChar = (c): boolean => c >= '0' && c <= '9';
 
+const singleCharMap = {
+  '+': TokenType.PLUS,
+  '-': TokenType.MINUS,
+  '/': TokenType.DIV,
+  '*': TokenType.MUL,
+  '(': TokenType.LPAREN,
+  ')': TokenType.RPAREN,
+};
+
 export class Lexer {
   position: number = 0;
   currentToken: Token;
@@ -42,29 +51,11 @@ export class Lexer {
         this.skipWhiteSpace();
         continue;
       }
-      if (this.currentChar == '+') {
+
+      if (singleCharMap[this.currentChar]) {
+        const token = new Token(singleCharMap[this.currentChar]);
         this.advance();
-        return new Token(TokenType.PLUS);
-      }
-      if (this.currentChar == '-') {
-        this.advance();
-        return new Token(TokenType.MINUS);
-      }
-      if (this.currentChar == '*') {
-        this.advance();
-        return new Token(TokenType.MUL);
-      }
-      if (this.currentChar == '/') {
-        this.advance();
-        return new Token(TokenType.DIV);
-      }
-      if (this.currentChar == '(') {
-        this.advance();
-        return new Token(TokenType.LPAREN);
-      }
-      if (this.currentChar == ')') {
-        this.advance();
-        return new Token(TokenType.RPAREN);
+        return token;
       }
 
       throw new Error(`Unsupported character ${this.currentChar} encountered`);
