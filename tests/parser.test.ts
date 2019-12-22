@@ -19,3 +19,10 @@ it('should evaluate expressions with negative numbers correctly', () => {
   expect(parse('=-2')).toBe(-2);
   expect(parse('=10 * -3')).toBe(-30);
 });
+
+it('should negate expressions correctly', () => {
+  expect(parse('=!-1')).toBe(0);
+  expect(parse('=!0')).toBe(1);
+  expect(parse('=!1')).toBe(0);
+  expect(parse('=!2')).toBe(0);
+});

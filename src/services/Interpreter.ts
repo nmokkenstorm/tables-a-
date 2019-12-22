@@ -38,6 +38,9 @@ export class Interpreter {
     } else if (token.type == TokenType.MINUS) {
       this.eat(TokenType.MINUS);
       return -1 * this.factor();
+    } else if (token.type == TokenType.NOT) {
+      this.eat(TokenType.NOT);
+      return this.factor() == 0 ? 1 : 0;
     } else {
       throw new Error('Unsupported token ' + this.currentToken.type);
     }

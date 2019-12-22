@@ -7,6 +7,13 @@ export enum TokenType {
   INTEGER = 'INTEGER',
   LPAREN = '(',
   RPAREN = ')',
+  NOT_EQUALS = '!=',
+  EQUALS = '==',
+  GREATER_EQUALS = '>=',
+  LESSER_EQUALS = '<=',
+  GREATER = '>',
+  LESSER = '<',
+  NOT = '!',
 }
 
 export class Token {

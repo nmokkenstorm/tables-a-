@@ -9,6 +9,9 @@ const singleCharMap = {
   '*': TokenType.MUL,
   '(': TokenType.LPAREN,
   ')': TokenType.RPAREN,
+  '>': TokenType.GREATER,
+  '<': TokenType.LESSER,
+  '!': TokenType.NOT,
 };
 
 export class Lexer {
