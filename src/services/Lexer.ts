@@ -1,5 +1,8 @@
 import {Token, TokenType} from './Token';
 
+const isAlphaChar = (c): boolean =>
+  (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+
 const isIntChar = (c): boolean => c >= '0' && c <= '9';
 
 const doubleCharMap = {
@@ -51,6 +54,17 @@ export class Lexer {
     return parseInt(result);
   }
 
+  readIdentifier(): string {
+    let result: string = '';
+
+    while (isAlphaChar(this.currentChar) || isIntChar(this.currentChar)) {
+      result += this.currentChar;
+      this.advance();
+    }
+
+    return result;
+  }
+
   skipWhiteSpace(): void {
     while (this.currentChar != '' && this.currentChar == ' ') {
       this.advance();
@@ -59,9 +73,14 @@ export class Lexer {
 
   getNextToken(): Token {
     while (this.currentChar != '') {
+      if (isAlphaChar(this.currentChar)) {
+        return new Token(TokenType.IDENTIFIER, this.readIdentifier());
+      }
+
       if (isIntChar(this.currentChar)) {
         return new Token(TokenType.INTEGER, this.readInteger());
       }
+
       if (this.currentChar == ' ') {
         this.skipWhiteSpace();
         continue;

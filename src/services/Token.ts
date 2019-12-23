@@ -17,8 +17,9 @@ export enum TokenType {
   QUESTIONMARK = 'QUESTIONMARK',
   COLON = 'COLON',
   ELVIS = 'ELVIS',
+  IDENTIFIER = 'IDENTIFIER',
 }
 
 export class Token {
-  constructor(public type: TokenType, public value: number = 0) {}
+  constructor(public type: TokenType, public value: number | string = 0) {}
 }
