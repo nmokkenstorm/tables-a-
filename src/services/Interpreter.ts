@@ -1,6 +1,16 @@
 import {Token, TokenType} from './Token';
 import {Lexer} from './Lexer';
 
+function numerical(value: string | number): number {
+  const numerical = Number(value);
+
+  if (Number.isNaN(numerical)) {
+    throw new Error('Using string as numerical value');
+  }
+
+  return numerical;
+}
+
 export class Interpreter {
   currentToken: Token;
 
@@ -22,7 +32,7 @@ export class Interpreter {
     return this.lexer.getNextToken();
   }
 
-  factor(): number {
+  factor(): number | string {
     let token = this.currentToken;
     if (token.type == TokenType.INTEGER) {
       this.eat(TokenType.INTEGER);
@@ -37,48 +47,52 @@ export class Interpreter {
       return this.factor();
     } else if (token.type == TokenType.MINUS) {
       this.eat(TokenType.MINUS);
-      return -1 * this.factor();
+      return -1 * numerical(this.factor());
     } else if (token.type == TokenType.NOT) {
       this.eat(TokenType.NOT);
-      return this.factor() == 0 ? 1 : 0;
+      return this.factor() ? 0 : 1;
     } else {
       throw new Error('Unsupported token ' + this.currentToken.type);
     }
   }
 
-  term(): number {
+  term(): number | string {
     let result = this.factor();
 
     while ([TokenType.MUL, TokenType.DIV].includes(this.currentToken.type)) {
+      result = numerical(result);
+
       if (this.currentToken.type == TokenType.MUL) {
         this.eat(TokenType.MUL);
-        result *= this.factor();
+        result *= numerical(this.factor());
       } else {
         this.eat(TokenType.DIV);
-        result /= this.factor();
+        result /= numerical(this.factor());
       }
     }
 
     return result;
   }
 
-  expr(): number {
+  expr(): number | string {
     let result = this.term();
 
     while ([TokenType.PLUS, TokenType.MINUS].includes(this.currentToken.type)) {
+      result = numerical(result);
+
       if (this.currentToken.type == TokenType.PLUS) {
         this.eat(TokenType.PLUS);
-        result += this.term();
+        result += numerical(this.term());
       } else {
         this.eat(TokenType.MINUS);
-        result -= this.term();
+        result -= numerical(this.term());
       }
     }
 
     return result;
   }
 
-  operator(): number {
+  operator(): number | string {
     let result = this.expr();
 
     while (
@@ -89,25 +103,27 @@ export class Interpreter {
         TokenType.LESSER,
       ].includes(this.currentToken.type)
     ) {
+      result = numerical(result);
+
       if (this.currentToken.type == TokenType.GREATER_EQUALS) {
         this.eat(TokenType.GREATER_EQUALS);
-        result = result >= this.expr() ? 1 : 0;
+        result = result >= numerical(this.expr()) ? 1 : 0;
       } else if (this.currentToken.type == TokenType.LESSER_EQUALS) {
         this.eat(TokenType.LESSER_EQUALS);
-        result = result <= this.expr() ? 1 : 0;
+        result = result <= numerical(this.expr()) ? 1 : 0;
       } else if (this.currentToken.type == TokenType.GREATER) {
         this.eat(TokenType.GREATER);
-        result = result > this.expr() ? 1 : 0;
+        result = result > numerical(this.expr()) ? 1 : 0;
       } else if (this.currentToken.type == TokenType.LESSER) {
         this.eat(TokenType.LESSER);
-        result = result < this.expr() ? 1 : 0;
+        result = result < numerical(this.expr()) ? 1 : 0;
       }
     }
 
     return result;
   }
 
-  equality(): number {
+  equality(): number | string {
     let result = this.operator();
 
     while (
@@ -125,7 +141,7 @@ export class Interpreter {
     return result;
   }
 
-  ternary(): number {
+  ternary(): number | string {
     let result = this.equality();
 
     while (TokenType.QUESTIONMARK == this.currentToken.type) {
@@ -141,7 +157,7 @@ export class Interpreter {
     return result;
   }
 
-  elvis(): number {
+  elvis(): number | string {
     let result = this.ternary();
 
     while (TokenType.ELVIS == this.currentToken.type) {
@@ -153,7 +169,7 @@ export class Interpreter {
     return result;
   }
 
-  run(): number {
+  run(): number | string {
     return this.elvis();
   }
 }
